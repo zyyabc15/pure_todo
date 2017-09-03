@@ -32,6 +32,9 @@ class Item extends Component {
       this.handleBlur(e);
     }
   }
+  toggle = (e)=>{
+    this.props.toggle(this.props.index)
+  }
   render() {
 
     let item = this.props.item;
@@ -48,7 +51,7 @@ class Item extends Component {
             onKeyPress={this.handleKeyPress} />
           :
           <div>
-            <input type="checkBox" checked={!item.active} />
+            <input type="checkBox" checked={!item.active} onChange={this.toggle}/>
             <label onDoubleClick={this.handleDoubleClick}>{item.value}</label>
           </div>
         }
@@ -59,6 +62,7 @@ class Item extends Component {
 Item.propTypes = {
   index: PropTypes.number.isRequired,
   item: PropTypes.object.isRequired,
-  editItem: PropTypes.func.isRequired
+  editItem: PropTypes.func.isRequired,
+  toggle:PropTypes.func.isRequired,
 }
 export default Item;

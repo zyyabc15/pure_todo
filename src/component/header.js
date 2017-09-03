@@ -21,12 +21,15 @@ class Header extends Component {
         }
 
     }
+toggleAll=(e)=>{
+    this.props.toggleAll(e.target.checked);
+}
     render() {
         return (
             <div>
                 <h2>TODOS</h2>
-                <input type="checkBox"></input>
-                <input type="text" value={this.state.value} onKeyPress={this.handleKeyPress} onChange={this.handleChange}></input>
+                <input type="checkBox" onChange={this.toggleAll} checked={this.props.checkState}></input>
+                <input type="text" value={this.state.value} onKeyPress={this.handleKeyPress} onChange={this.handleChange} ></input>
             </div>
         )
     }

@@ -34,45 +34,62 @@ class App extends Component {
         })
     }
     getItems4Show = () => {
-        
+
         let itemList = this.state.itemList;
         let items4Show;
         switch (this.state.showType) {
             case 'All':
-            items4Show = this.state.itemList;
+                items4Show = this.state.itemList;
                 break;
             case 'Active':
-            items4Show=  itemList.filter(v => v.active=== true);
+                items4Show = itemList.filter(v => v.active === true);
                 break;
             case 'Completed':
-            items4Show= itemList.filter(v => v.active=== false);
+                items4Show = itemList.filter(v => v.active === false);
                 break;
             default:
-            items4Show=this.state.itemList;
+                items4Show = this.state.itemList;
                 break;
         }
         return items4Show;
-        // let {showType}= this.state;
-        // console.log(showType);
-        // if(showType === 'All'){
-        //     return this.state.itemList;
-        // }else if(showType ==='Active'){
-        //     itemList = itemList.filter(v => v.active=== true);
-        //     return itemList;
-        // }else if(showType ==='Completed'){
-        //     return itemList.filter(v => v.active === false);
-        // }
-        
-        
-
+    }
+    toggle = (index) => {
+        let itemList = Immutable.fromJS(this.state.itemList).updateIn([index], item => item.update('active',v=>!v));
+        this.setState({
+            itemList: itemList.toJS()
+        })
+    }
+    toggleAll=(checkState)=>{
+        let itemList = Immutable.fromJS(this.state.itemList).map(v=>v.set('active',!checkState));
+        this.setState({
+            itemList: itemList.toJS()
+        })
+    }
+    getCheckState=()=>{
+        let itemList = this.state.itemList;
+        let completedList = itemList.filter(v=>v.active===false);
+        return itemList.length===completedList.length
+    }
+    getActiveNum=()=>{
+        let itemList = this.state.itemList;
+        let activeList = itemList.filter(v=>v.active===true);
+        return activeList.length;
+    }
+    clearAll=()=>{
+        let itemList = this.state.itemList;
+        this.setState({
+            itemList:itemList.filter(v=>v.active===true)
+        })
     }
     render() {
         let items4Show = this.getItems4Show();
+        let checkState = this.getCheckState();
+        let activeNum = this.getActiveNum();
         return (
             <div>
-                <Header addItem={this.addItem} />
-                <Section items4Show={items4Show} editItem={this.editItem} />
-                <Footer changeType={this.changeType} />
+                <Header addItem={this.addItem} toggleAll={this.toggleAll} checkState={checkState}/>
+                <Section items4Show={items4Show} editItem={this.editItem} toggle={this.toggle} />
+                <Footer changeType={this.changeType} activeNum={activeNum} clearAll={this.clearAll}/>
             </div>
         );
     }
