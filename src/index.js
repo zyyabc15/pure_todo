@@ -54,42 +54,58 @@ class App extends Component {
         return items4Show;
     }
     toggle = (index) => {
-        let itemList = Immutable.fromJS(this.state.itemList).updateIn([index], item => item.update('active',v=>!v));
+        let itemList = Immutable.fromJS(this.state.itemList).updateIn([index], item => item.update('active', v => !v));
         this.setState({
             itemList: itemList.toJS()
         })
     }
-    toggleAll=(checkState)=>{
-        let itemList = Immutable.fromJS(this.state.itemList).map(v=>v.set('active',!checkState));
+    toggleAll = (checkState) => {
+        let itemList = Immutable.fromJS(this.state.itemList).map(v => v.set('active', !checkState));
         this.setState({
             itemList: itemList.toJS()
         })
     }
-    getCheckState=()=>{
+    getCheckState = () => {
         let itemList = this.state.itemList;
-        let completedList = itemList.filter(v=>v.active===false);
-        return itemList.length===completedList.length
+        let completedList = itemList.filter(v => v.active === false);
+        return itemList.length === completedList.length
     }
-    getActiveNum=()=>{
+    getActiveNum = () => {
         let itemList = this.state.itemList;
-        let activeList = itemList.filter(v=>v.active===true);
+        let activeList = itemList.filter(v => v.active === true);
         return activeList.length;
     }
-    clearAll=()=>{
+    clearAll = () => {
         let itemList = this.state.itemList;
         this.setState({
-            itemList:itemList.filter(v=>v.active===true)
+            itemList: itemList.filter(v => v.active === true)
         })
+    }
+    delItem = (index) => {
+        let itemList = this.state.itemList;
+        this.setState({
+            itemList: itemList.filter((v, k) => k !== index)
+        })
+    }
+    showClearAll = () => {
+        let itemList = this.state.itemList;
+        let completedList = itemList.filter(v => v.active === false);
+        return completedList.length > 0;
+    }
+    showFooter = () => {
+        return this.state.itemList.length > 0;
     }
     render() {
         let items4Show = this.getItems4Show();
         let checkState = this.getCheckState();
         let activeNum = this.getActiveNum();
+        let showClearAll = this.showClearAll();
+        let showFooter = this.showFooter();
         return (
             <div>
-                <Header addItem={this.addItem} toggleAll={this.toggleAll} checkState={checkState}/>
-                <Section items4Show={items4Show} editItem={this.editItem} toggle={this.toggle} />
-                <Footer changeType={this.changeType} activeNum={activeNum} clearAll={this.clearAll}/>
+                <Header addItem={this.addItem} toggleAll={this.toggleAll} checkState={checkState} />
+                <Section items4Show={items4Show} editItem={this.editItem} toggle={this.toggle} delItem={this.delItem} />
+                {showFooter && <Footer changeType={this.changeType} activeNum={activeNum} clearAll={this.clearAll} showClearAll={showClearAll} />}
             </div>
         );
     }

@@ -32,17 +32,20 @@ class Item extends Component {
       this.handleBlur(e);
     }
   }
-  toggle = (e)=>{
+  toggle = (e) => {
     this.props.toggle(this.props.index)
+  }
+  delItem = (index) => {
+    this.props.delItem(this.props.index);
   }
   render() {
 
     let item = this.props.item;
 
     return (
-      <div>
+      <div className="item">
         {this.state.showEditInput ?
-          <input
+          <input className="editInput"
             type="text"
             autoFocus="autofocus"
             value={this.state.value || ''}
@@ -51,8 +54,9 @@ class Item extends Component {
             onKeyPress={this.handleKeyPress} />
           :
           <div>
-            <input type="checkBox" checked={!item.active} onChange={this.toggle}/>
-            <label onDoubleClick={this.handleDoubleClick}>{item.value}</label>
+            <input type="checkBox" checked={!item.active} onChange={this.toggle} />
+            <label className="content" onDoubleClick={this.handleDoubleClick}>{item.value}</label>
+            <label className="delBut" onClick={this.delItem}>X</label>
           </div>
         }
       </div>
@@ -63,6 +67,7 @@ Item.propTypes = {
   index: PropTypes.number.isRequired,
   item: PropTypes.object.isRequired,
   editItem: PropTypes.func.isRequired,
-  toggle:PropTypes.func.isRequired,
+  toggle: PropTypes.func.isRequired,
+  delItem: PropTypes.func.isRequired
 }
 export default Item;

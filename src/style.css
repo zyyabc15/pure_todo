@@ -2,4 +2,96 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.header h2 {
+  display: inline-block;
+}
+
+.header div {
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.header input[type='text'] {
+  width: 200px;
+  border-radius: 5px;
+  border: 2px solid black;
+  outline: none;
+}
+
+.section div * {
+  display: inline-block;
+}
+
+.item .content {
+  width: 200px;
+  outline: none;
+  border-radius: 5px;
+  text-align: left;
+}
+
+.editInput {
+  width: 200px;
+  border-radius: 5px;
+  outline: none;
+  margin-left: 20px;
+  border: 2px solid black;
+}
+
+div.item {
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.delBut {
+  opacity: 0;
+  position: relative;
+  right: 10px;
+  cursor: pointer;
+}
+
+.delBut:hover {
+  opacity: 1;
+}
+
+.content:hover+label {
+  opacity: 1;
+}
+
+.footer {
+  font-size: 10px;
+  width: 400px;
+  text-align: center;
+  display: inline-block;
+}
+
+.footer button {
+  font-size: 10px;
+  background: transparent;
+  border: 0.5px solid black;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-right: 1px;
+}
+
+.footer .clearAll {
+  float: right;
+}
+
+.footer .hide {
+  opacity: 0;
+}
+
+.footer label {
+  float: left;
 }

@@ -21,21 +21,25 @@ class Header extends Component {
         }
 
     }
-toggleAll=(e)=>{
-    this.props.toggleAll(e.target.checked);
-}
+    toggleAll = (e) => {
+        this.props.toggleAll(e.target.checked);
+    }
     render() {
         return (
-            <div>
+            <div className="header">
                 <h2>TODOS</h2>
-                <input type="checkBox" onChange={this.toggleAll} checked={this.props.checkState}></input>
-                <input type="text" value={this.state.value} onKeyPress={this.handleKeyPress} onChange={this.handleChange} ></input>
+                <div>
+                    <input type="checkBox" onChange={this.toggleAll} checked={this.props.checkState}></input>
+                    <input type="text" value={this.state.value} onKeyPress={this.handleKeyPress} onChange={this.handleChange} ></input>
+                </div>
             </div>
         )
     }
 }
 
 Header.propTypes = {
-    addItem: PropTypes.func.isRequired
+    addItem: PropTypes.func.isRequired,
+    toggleAll: PropTypes.func.isRequired,
+    checkState: PropTypes.bool.isRequired
 }
 export default Header;
